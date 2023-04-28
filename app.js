@@ -5,29 +5,20 @@ const { dbConnection } = require("./db/config.db");
 
 //Crear servidor de express
 const app = express();
-const port = process.env.PORT;
 
 //Db connection
 dbConnection();
 
 //Cors
-app.use(cors);
+app.use( cors() );
+
+//Lectura y parseo del BODY
+app.use( express.json() );
 
 //Rutas
-app.get("/", (req, res) => {
-  res.status(200).json({
-    ok: true,
-    users: [
-      {
-        name: "User 01",
-        email: "email@email.com",
-      },
-    ],
-  });
+app.use("/services/users", require("./routes/users.routes"));
+app.use("/services/login", require("./routes/auth.routes"));
 
-  res.end();
-});
-
-app.listen(port, () => {
-  console.log(`Server running on port ${port} ✅`);
+app.listen(process.env.PORT, () => {
+  console.log(`Server running on port ${process.env.PORT} ✅`);
 });

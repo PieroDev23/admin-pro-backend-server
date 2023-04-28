@@ -9,8 +9,7 @@ const dbConnection = async () => {
     await mongoose.connect(process.env.DB_CONNECTION);
     console.log("db ready! 🚀");
   } catch (err) {
-    console.log(err);
-    throw new Error(`Error al conectar a la bd`);
+    throw new Error(err);
   }
 };
 
